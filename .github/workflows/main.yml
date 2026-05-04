@@ -24,7 +24,7 @@ jobs:
 
       - name: Compile for Windows
         run: |
-          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse
+          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse -DNO_EXECINFO
           x86_64-w64-mingw32-g++-posix -o adbfs.exe adbfs.o -lws2_32
 
       - name: Upload artifact
