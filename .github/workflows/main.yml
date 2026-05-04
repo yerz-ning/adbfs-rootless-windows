@@ -23,6 +23,7 @@ jobs:
           sudo wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/winfsp_fuse.h -O /usr/local/include/fuse/winfsp_fuse.h
 
       - name: Patch source for Windows
+        shell: bash
         run: |
           sed -i 's/#include <execinfo.h>/\/\/ #include <execinfo.h>/' adbfs.cpp
           sed -i 's/#include <pwd.h>/\/\/ #include <pwd.h>/' adbfs.cpp
@@ -34,7 +35,7 @@ jobs:
 
       - name: Compile for Windows
         run: |
-          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse -D_FILE_OFFSET_BITS=64
+          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse -D_FILE_OFFSET_BITS=64 -D__MINGW_USE_VC2005_COMPAT
           x86_64-w64-mingw32-g++-posix -o adbfs.exe adbfs.o -lws2_32
 
       - name: Upload artifact
