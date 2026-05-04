@@ -9,22 +9,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install cross-compiler and dependencies
+      - name: Install cross-compiler
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 make libfuse-dev pkg-config
+          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 make
 
-      - name: Prepare WinFsp headers
+      - name: Download WinFsp headers
         run: |
-          sudo apt-get install -y wget unzip
-          wget https://github.com/winfsp/winfsp/archive/refs/heads/master.zip
-          unzip master.zip
-          sudo cp -r winfsp-master/inc/fuse /usr/local/include/
-          sudo cp winfsp-master/build/VStudio/winfsp.pc /usr/local/lib/pkgconfig/
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse.h
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_common.h
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_opt.h
+          mkdir -p /usr/local/include/fuse
+          cp fuse.h fuse_common.h fuse_opt.h /usr/local/include/fuse/
 
       - name: Compile for Windows
         run: |
-          PKG_CONFIG_PATH=/usr/local/lib/pkgconfig make CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++
+          make CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ CFLAGS="-I/usr/local/include/fuse" CXXFLAGS="-I/usr/local/include/fuse"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
