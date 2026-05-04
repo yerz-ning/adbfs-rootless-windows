@@ -24,20 +24,16 @@ jobs:
 
       - name: Patch source for Windows
         run: |
-          sed -i '/#include <execinfo.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <pwd.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <grp.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <sys\/types.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <unistd.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <sys\/stat.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <fcntl.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <sys\/time.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <utime.h>/s/^/\/\/ /' adbfs.cpp && \
-          sed -i '/#include <dirent.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <execinfo.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <pwd.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <grp.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <sys\/types.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <unistd.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <sys\/stat.h>/s/^/\/\/ /' adbfs.cpp
 
       - name: Compile for Windows
         run: |
-          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse
+          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse -D_FILE_OFFSET_BITS=64 -D__MINGW_USE_VC2005_COMPAT
           x86_64-w64-mingw32-g++-posix -o adbfs.exe adbfs.o -lws2_32
 
       - name: Upload artifact
