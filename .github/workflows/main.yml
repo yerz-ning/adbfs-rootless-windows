@@ -25,6 +25,7 @@ jobs:
       - name: Patch source for Windows
         run: |
           sed -i 's/#include <execinfo.h>/\/\/ #include <execinfo.h>/' adbfs.cpp
+          sed -i 's/#include <pwd.h>/\/\/ #include <pwd.h>/' adbfs.cpp
 
       - name: Compile for Windows
         run: |
