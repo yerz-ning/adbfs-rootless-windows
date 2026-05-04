@@ -23,15 +23,7 @@ jobs:
           sudo wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/winfsp_fuse.h -O /usr/local/include/fuse/winfsp_fuse.h
 
       - name: Patch source for Windows
-        shell: bash
-        run: |
-          sed -i 's/#include <execinfo.h>/\/\/ #include <execinfo.h>/' adbfs.cpp
-          sed -i 's/#include <pwd.h>/\/\/ #include <pwd.h>/' adbfs.cpp
-          sed -i 's/#include <grp.h>/\/\/ #include <grp.h>/' adbfs.cpp
-          sed -i 's/#include <sys\/types.h>/\/\/ #include <sys\/types.h>/' adbfs.cpp
-          sed -i 's/#include <unistd.h>/\/\/ #include <unistd.h>/' adbfs.cpp
-          sed -i 's/#include <sys\/stat.h>/\/\/ #include <sys\/stat.h>/' adbfs.cpp
-          sed -i 's/#include <fcntl.h>/\/\/ #include <fcntl.h>/' adbfs.cpp
+        run: sed -i 's/#include <execinfo.h>/\/\/ #include <execinfo.h>/' adbfs.cpp && sed -i 's/#include <pwd.h>/\/\/ #include <pwd.h>/' adbfs.cpp && sed -i 's/#include <grp.h>/\/\/ #include <grp.h>/' adbfs.cpp && sed -i 's/#include <sys\/types.h>/\/\/ #include <sys\/types.h>/' adbfs.cpp && sed -i 's/#include <unistd.h>/\/\/ #include <unistd.h>/' adbfs.cpp && sed -i 's/#include <sys\/stat.h>/\/\/ #include <sys\/stat.h>/' adbfs.cpp && sed -i 's/#include <fcntl.h>/\/\/ #include <fcntl.h>/' adbfs.cpp
 
       - name: Compile for Windows
         run: |
