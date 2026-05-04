@@ -24,15 +24,15 @@ jobs:
 
       - name: Patch source for Windows
         run: |
-          sed -i '/#include <execinfo.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <pwd.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <grp.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <sys\/types.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <unistd.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <sys\/stat.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <fcntl.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <sys\/time.h>/s/^/\/\/ /' adbfs.cpp
-          sed -i '/#include <utime.h>/s/^/\/\/ /' adbfs.cpp
+          sed -i '/#include <execinfo.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <pwd.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <grp.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <sys\/types.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <unistd.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <sys\/stat.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <fcntl.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <sys\/time.h>/s/^/\/\/ /' adbfs.cpp && \
+          sed -i '/#include <utime.h>/s/^/\/\/ /' adbfs.cpp && \
           sed -i '/#include <dirent.h>/s/^/\/\/ /' adbfs.cpp
 
       - name: Compile for Windows
