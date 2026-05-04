@@ -12,24 +12,19 @@ jobs:
       - name: Install cross-compiler
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64 make
+          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64-posix make
 
       - name: Download WinFsp headers
         run: |
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse.h
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_common.h
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_opt.h
           mkdir -p /usr/local/include/fuse
-          cp fuse.h fuse_common.h fuse_opt.h /usr/local/include/fuse/
-
-      - name: Patch Makefile to remove fuse.pc dependency
-        run: |
-          sed -i 's/`pkg-config fuse --cflags`/-I\/usr\/local\/include\/fuse/g' Makefile
-          sed -i 's/`pkg-config fuse --libs`//g' Makefile
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse.h -O /usr/local/include/fuse/fuse.h
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_common.h -O /usr/local/include/fuse/fuse_common.h
+          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_opt.h -O /usr/local/include/fuse/fuse_opt.h
 
       - name: Compile for Windows
         run: |
-          make CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++
+          g++-mingw-w64-x86-64-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse
+          g++-mingw-w64-x86-64-posix -o adbfs.exe adbfs.o -lws2_32
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
