@@ -16,15 +16,15 @@ jobs:
 
       - name: Download WinFsp headers
         run: |
-          mkdir -p /usr/local/include/fuse
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse.h -O /usr/local/include/fuse/fuse.h
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_common.h -O /usr/local/include/fuse/fuse_common.h
-          wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_opt.h -O /usr/local/include/fuse/fuse_opt.h
+          sudo mkdir -p /usr/local/include/fuse
+          sudo wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse.h -O /usr/local/include/fuse/fuse.h
+          sudo wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_common.h -O /usr/local/include/fuse/fuse_common.h
+          sudo wget https://gitee.com/mirrors/winfsp/raw/master/inc/fuse/fuse_opt.h -O /usr/local/include/fuse/fuse_opt.h
 
       - name: Compile for Windows
         run: |
-          g++-mingw-w64-x86-64-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse
-          g++-mingw-w64-x86-64-posix -o adbfs.exe adbfs.o -lws2_32
+          x86_64-w64-mingw32-g++-posix -c -o adbfs.o adbfs.cpp -Wall -I/usr/local/include/fuse
+          x86_64-w64-mingw32-g++-posix -o adbfs.exe adbfs.o -lws2_32
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
